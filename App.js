@@ -29,28 +29,47 @@ export default class App extends React.Component {
 
   render(){
     return (
-      <QRCodeScanner
-      onRead={this.onSuccess}
-      flashMode={RNCamera.Constants.FlashMode.torch}
-      topContent={
-        <Text style={styles.centerText}>
-          Go to{' '}
-          <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
-          your computer and scan the QR code.
-        </Text>
-      }
-      bottomContent={
-        <TouchableOpacity style={styles.buttonTouchable}>
-          <Text style={styles.buttonText}>OK. Got it!</Text>
-        </TouchableOpacity>
-      }
-    />
+      <View style={styles.container}>
+    
+      <View style={styles.scannerContainer} >
+          <QRCodeScanner
+          onRead={this.onSuccess}
+          flashMode={RNCamera.Constants.FlashMode.torch}
+          topContent={
+            <Text style={styles.centerText}>
+              Go to{' '}
+              <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
+              your computer and scan the QR code.
+            </Text>
+          }
+          bottomContent={
+            <TouchableOpacity style={styles.buttonTouchable}>
+              <Text style={styles.buttonText}>OK. Got it!</Text>
+            </TouchableOpacity>
+          }
+        />
+      </View>
+      <View style={styles.footerContainer}>
+
+      </View>
+
+    </View>
     );
   }
  
 };
 
 const styles = StyleSheet.create({
-
+  container:{
+    backgroundColor:'gray',
+    flex:1
+  },
+  footerContainer:{
+    flex:1,
+    backgroundColor:'gray'
+  },
+  scannerContainer:{
+    flex:2
+  }
 })
 
