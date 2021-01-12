@@ -14,7 +14,8 @@ import {
   View,
   Text,
   StatusBar,
-  TouchableOpacity
+  TouchableOpacity,
+  Linking
 } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
@@ -30,7 +31,6 @@ export default class App extends React.Component {
   render(){
     return (
       <View style={styles.container}>
-    
       <View style={styles.scannerContainer} >
           <QRCodeScanner
           onRead={this.onSuccess}
@@ -50,7 +50,7 @@ export default class App extends React.Component {
         />
       </View>
       <View style={styles.footerContainer}>
-
+          <Text style={styles.text}>Denise</Text>
       </View>
 
     </View>
@@ -66,10 +66,17 @@ const styles = StyleSheet.create({
   },
   footerContainer:{
     flex:1,
-    backgroundColor:'gray'
+    // backgroundColor:'gray',
+    justifyContent:'center',
+    alignItems:'center',
   },
   scannerContainer:{
-    flex:2
+    flex:2,
+    
+  },
+  text:{
+    fontSize:30,
+    fontWeight:'bold'
   }
 })
 
