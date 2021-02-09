@@ -12,6 +12,8 @@ target 'qrcode' do
 
   pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
   target 'qrcodeTests' do
     inherit! :complete
     # Pods for testing
