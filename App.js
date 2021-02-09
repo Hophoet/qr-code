@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -15,45 +7,51 @@ import {
   Text,
   StatusBar,
   TouchableOpacity,
-  Linking
 } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
+import ScanQRCode from './screens/ScanQRCode';
+import GenerateQRCode from'./screens/GenerateQRCode';
 
-export default class App extends React.Component {
+class App extends React.Component {
+	constructor(props){
+		super(props);
+		this.state = {
+			 scan:false
+		}
+	}
+  onChange = () => {	
+	this.setState({scan:!this.state.scan});	
+  }
+ 
+  getScreen = () => {
+	 if(this.state.scan){
+		return <ScanQRCode/>;
+	 }
+	  return <GenerateQRCode/>;
+	}
 
-  onSuccess = e => {
-    Linking.openURL(e.data).catch(err =>
-      console.error('An error occured', err)
-    );
-  };
+ getButtonLabel = () => {
+	if(this.state.scan){
+		return 'Generate QR Code';
+	}
+	return 'Scan QR Code';
+	
+}
+
 
   render(){
     return (
-      <View style={styles.container}>
-      <View style={styles.scannerContainer} >
-          <QRCodeScanner
-          onRead={this.onSuccess}
-          flashMode={RNCamera.Constants.FlashMode.torch}
-          topContent={
-            <Text style={styles.centerText}>
-              Go to{' '}
-              <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
-              your computer and scan the QR code.
-            </Text>
-          }
-          bottomContent={
-            <TouchableOpacity style={styles.buttonTouchable}>
-              <Text style={styles.buttonText}>OK. Got it!</Text>
-            </TouchableOpacity>
-          }
-        />
-      </View>
-      <View style={styles.footerContainer}>
-          <Text style={styles.text}>Denise</Text>
-      </View>
-
-    </View>
+		<View style={styles.container}>
+			<TouchableOpacity 
+				style={styles.changeButton}
+				activateOpacity={.5}
+				onPress={this.onChange}
+			>
+			 <Text style={styles.changeButtonLabel}>{this.getButtonLabel()}</Text>
+			</TouchableOpacity>
+			{this.getScreen()}
+		</View>
     );
   }
  
@@ -61,22 +59,34 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container:{
-    backgroundColor:'gray',
     flex:1
   },
   footerContainer:{
     flex:1,
-    // backgroundColor:'gray',
+    backgroundColor:'gray',
     justifyContent:'center',
     alignItems:'center',
   },
   scannerContainer:{
-    flex:2,
+    flex:1,
     
   },
   text:{
     fontSize:30,
     fontWeight:'bold'
-  }
+  },
+  changeButton:{
+	justifyContent:'center',
+	alignItems:'center',
+	paddingVertical:10,
+	marginHorizontal:20,
+	marginVertical:10,
+	borderColor:'black',
+	borderRadius:5,
+	backgroundColor:'white',
+    borderWidth: StyleSheet.hairlineWidth,
+	}
 })
 
+
+export default App;
