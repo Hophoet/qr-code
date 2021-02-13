@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     fontWeight:'bold'
   },
   headerContainer:{
-	
+		backgroundColor:'white',	
 	}
 })
 
