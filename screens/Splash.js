@@ -22,6 +22,7 @@ export default class Splash extends React.Component{
 					resizeMode='contain'
 					style={styles.logo}
 					source={require('../assets/images/logo.png')} />
+				<Text style={{color:'white'}}>by hophoet</Text>
 				<View style={styles.code}>
 					<Text style={styles.codeLabel}>code</Text>
 				</View>
