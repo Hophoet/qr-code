@@ -30,11 +30,11 @@ class ScanQRCode extends React.Component {
           onRead={this.onSuccess}
           flashMode={RNCamera.Constants.FlashMode.off}
           topContent={
-            <Text style={styles.centerText}>
-              Go to{' '}
-              <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
-              your computer and scan the QR code.
-            </Text>
+			<View style={styles.headerContainer}>
+				<Text style={styles.centerText}>
+				   Scan QR code.
+				</Text>
+			</View>
           }
           bottomContent={
             <TouchableOpacity style={styles.buttonTouchable}>
@@ -43,10 +43,6 @@ class ScanQRCode extends React.Component {
           }
         />
       </View>
-      <View style={styles.footerContainer}>
-          <Text style={styles.text}>Scan QR Code</Text>
-      </View>
-
     </View>
     );
   }
@@ -59,20 +55,16 @@ const styles = StyleSheet.create({
     flex:1,
 	marginTop:30,
   },
-  footerContainer:{
-    flex:1,
-    backgroundColor:'white',
-    justifyContent:'center',
-    alignItems:'center',
-  },
   scannerContainer:{
     flex:1,
-    
   },
   text:{
     fontSize:30,
     fontWeight:'bold'
-  }
+  },
+  headerContainer:{
+	
+	}
 })
 
 
