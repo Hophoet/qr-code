@@ -12,12 +12,15 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 import ScanQRCode from './screens/ScanQRCode';
 import GenerateQRCode from'./screens/GenerateQRCode';
+import Splash from './screens/Splash';
+
 
 class App extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			 scan:false
+			 scan:false,
+			 splashIsShow:true,
 		}
 	}
   onChange = () => {	
@@ -39,27 +42,42 @@ class App extends React.Component {
 	
 }
 
+	componentDidMount(){
+		setTimeout(()=> {this.setState({splashIsShow:false})}, 3000);
+	}
+
+	renderApp = () => {
+		if(this.state.splashIsShow){
+			return <Splash/>
+		}
+		return(
+		<View style={styles.container}>
+				{this.getScreen()}
+				<TouchableOpacity 
+					style={styles.changeButton}
+					activateOpacity={.5}
+					onPress={this.onChange}
+				>
+				 <Text style={styles.changeButtonLabel}>{this.getButtonLabel()}</Text>
+				</TouchableOpacity>
+			</View>
+		)
+
+	}	
 
   render(){
-    return (
-		<View style={styles.container}>
-			<TouchableOpacity 
-				style={styles.changeButton}
-				activateOpacity={.5}
-				onPress={this.onChange}
-			>
-			 <Text style={styles.changeButtonLabel}>{this.getButtonLabel()}</Text>
-			</TouchableOpacity>
-			{this.getScreen()}
-		</View>
-    );
-  }
+    return this.renderApp();
+}
+  
  
 };
 
+export default App;
+
 const styles = StyleSheet.create({
   container:{
-    flex:1
+    flex:1,
+	backgroundColor:'black',
   },
   footerContainer:{
     flex:1,
@@ -73,7 +91,7 @@ const styles = StyleSheet.create({
   },
   text:{
     fontSize:30,
-    fontWeight:'bold'
+    fontWeight:'bold',
   },
   changeButton:{
 	justifyContent:'center',
@@ -89,4 +107,3 @@ const styles = StyleSheet.create({
 })
 
 
-export default App;
