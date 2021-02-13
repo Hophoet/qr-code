@@ -52,6 +52,7 @@ class App extends React.Component {
 		}
 		return(
 		<View style={styles.container}>
+			<StatusBar backgroundColor='black' />
 				{this.getScreen()}
 				<TouchableOpacity 
 					style={styles.changeButton}
