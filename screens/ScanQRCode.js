@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   Text,
   StatusBar,
   TouchableOpacity,
+  Linking,
+  Alert
 } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
@@ -19,31 +19,42 @@ class ScanQRCode extends React.Component {
 		}
 	}
   onSuccess = e => {	
-	//		
+  	 let qrcodeData = e.data;
+	 this.show(qrcodeData);
+  }
+
+  show = async (qrcodeData) =>{
+	 const supportedLink = await Linking.canOpenURL(qrcodeData);
+	 if(supportedLink){
+		await Linking.openURL(supportedLink);	
+	}
+	else{
+		Alert.alert(`Can't be open as a URL\n QRCODE data:${supportedLink}`);
+	}
   }
 
   render(){
     return (
       <View style={styles.container}>
-      <View style={styles.scannerContainer} >
-          <QRCodeScanner
-          onRead={this.onSuccess}
-          flashMode={RNCamera.Constants.FlashMode.off}
-          topContent={
-			<View style={styles.headerContainer}>
-				<Text style={styles.centerText}>
-				   Scan QR code.
-				</Text>
-			</View>
-          }
-          bottomContent={
-            <TouchableOpacity style={styles.buttonTouchable}>
-              <Text style={styles.buttonText}>OK. Got it!</Text>
-            </TouchableOpacity>
-          }
-        />
+		  <View style={styles.scannerContainer} >
+			  <QRCodeScanner
+			  onRead={this.onSuccess}
+			  flashMode={RNCamera.Constants.FlashMode.off}
+			  topContent={
+				<View style={styles.headerContainer}>
+					<Text style={styles.centerText}>
+					   Scan QR code.
+					</Text>
+				</View>
+			  }
+			  bottomContent={
+				<TouchableOpacity style={styles.buttonTouchable}>
+				  <Text style={styles.buttonText}>OK. Got it!</Text>
+				</TouchableOpacity>
+			  }
+			/>
+		  </View>
       </View>
-    </View>
     );
   }
  
