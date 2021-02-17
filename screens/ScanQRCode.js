@@ -36,6 +36,7 @@ class ScanQRCode extends React.Component {
   render(){
     return (
       <View style={styles.container}>
+		  <StatusBar backgroundColor='black' />
 		  <View style={styles.scannerContainer} >
 			  <QRCodeScanner
 			  onRead={this.onSuccess}
