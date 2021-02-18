@@ -6,7 +6,8 @@ import {
   StatusBar,
   TouchableOpacity,
   Linking,
-  Alert
+  Alert,
+  ActivityIndicator
 } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
@@ -15,21 +16,26 @@ class ScanQRCode extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			qrcode:null
+			qrcodeData:null,
+			isLoading:false
 		}
 	}
   onSuccess = e => {	
   	 let qrcodeData = e.data;
+	 this.setState({qrcodeData:qrcodeData});
 	 this.show(qrcodeData);
   }
 
   show = async (qrcodeData) =>{
+	 this.setState({isLoading:true});
 	 const supportedLink = await Linking.canOpenURL(qrcodeData);
 	 if(supportedLink){
 		await Linking.openURL(supportedLink);	
+	 	this.setState({isLoading:false});
 	}
 	else{
-		Alert.alert(`Can't be open as a URL\n QRCODE data:${supportedLink}`);
+		Alert.alert(`QRCODE data:${this.state.qrcodeData}`);
+	 	this.setState({isLoading:false});
 	}
   }
 
@@ -37,16 +43,17 @@ class ScanQRCode extends React.Component {
     return (
       <View style={styles.container}>
 		  <StatusBar backgroundColor='black' />
+		  <View style={styles.headerContainer}>
+				<Text>{this.state.qrcodeData}</Text>
+				{ this.state.isLoading && <ActivityIndicator size='large' color='gray' /> }
+		  </View>
 		  <View style={styles.scannerContainer} >
 			  <QRCodeScanner
 			  onRead={this.onSuccess}
 			  flashMode={RNCamera.Constants.FlashMode.off}
 			  topContent={
-				<View style={styles.headerContainer}>
-					<Text style={styles.centerText}>
-					   Scan QR code.
-					</Text>
-				</View>
+				<>
+				</>
 			  }
 			  bottomContent={
 				<TouchableOpacity style={styles.buttonTouchable}>
@@ -65,7 +72,6 @@ const styles = StyleSheet.create({
   container:{
     backgroundColor:'white',
     flex:1,
-	marginTop:30,
   },
   scannerContainer:{
     flex:1,
@@ -76,6 +82,8 @@ const styles = StyleSheet.create({
   },
   headerContainer:{
 		backgroundColor:'white',	
+		justifyContent:'center',
+		alignItems:'center',
 	}
 })
 
