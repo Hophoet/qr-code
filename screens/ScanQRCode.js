@@ -34,7 +34,7 @@ class ScanQRCode extends React.Component {
 	 	this.setState({isLoading:false});
 	}
 	else{
-		Alert.alert(`QRCODE data:${this.state.qrcodeData}`);
+		Alert.alert(`QRCODE data: ${this.state.qrcodeData}\nType: ${typeof this.state.qrcodeData}\nLength: ${String(this.state.qrcodeData).length}`);
 	 	this.setState({isLoading:false});
 	}
   }
